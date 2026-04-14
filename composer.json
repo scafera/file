@@ -1,0 +1,31 @@
+{
+    "name": "scafera/file",
+    "description": "File handling for the Scafera framework",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": ["scafera", "storage", "file", "php"],
+    "homepage": "https://github.com/scafera/file",
+    "support": {
+        "issues": "https://github.com/scafera/file/issues",
+        "source": "https://github.com/scafera/file"
+    },
+    "require": {
+        "php": ">=8.4",
+        "scafera/kernel": "^1.0",
+        "symfony/mime": "^8.0",
+        "symfony/filesystem": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Scafera\\File\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Scafera\\File\\Tests\\": "tests/"
+        }
+    }
+}
