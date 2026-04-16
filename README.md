@@ -4,11 +4,15 @@ File handling for the Scafera framework. Upload, validate, store, and serve file
 
 Internally adopts `symfony/http-foundation` Upload, `symfony/mime`, and `symfony/filesystem`. Userland code never imports Symfony file types — boundary enforcement blocks it at compile time.
 
+> **Provides:** File handling for Scafera — upload (`UploadExtractor` → `UploadedFile`), validate (`UploadValidator` + `UploadConstraint`), store (`FileStorage`), and serve (`FileResponse`) behind Scafera-owned types. Server-side MIME detection via magic bytes, automatic path-traversal sanitization, and collision-safe filenames.
+>
+> **Depends on:** A Scafera host project whose architecture package defines a storage directory via `getStorageDir()` (e.g. `var/uploads/` in `scafera/layered`).
+>
+> **Extension points:** None of its own — the package exposes concrete services (`UploadExtractor`, `UploadValidator`, `FileStorage`, `FileResponse`) used directly. `UploadConstraint` is configured per-call with allowed extensions, MIME types, and max size.
+>
+> **Not responsible for:** Form processing (compose with `scafera/form` per ADR-062) · client-supplied MIME types (server-side magic bytes only) · choosing the storage directory (architecture package owns `getStorageDir()`) · direct use of Symfony file types in userland (blocked by `FileBoundaryPass` and `FileBoundaryValidator`).
+
 This is a **capability package**. It adds optional file handling to a Scafera project. It does not define folder structure or architectural rules — those belong to architecture packages.
-
-## Core Idea
-
-Scafera treats the filesystem as an implementation detail. Your application code interacts with `UploadExtractor` for receiving files, `UploadValidator` for validating them, `FileStorage` for storing them, and `FileResponse` for serving them back — never touching Symfony's file types directly. MIME detection uses server-side magic bytes, not client-supplied headers. Filenames are sanitized and path traversal is prevented before any filesystem operation. The storage directory is defined by the architecture package (e.g., `var/uploads/` in the layered architecture). A build-time compiler pass enforces these boundaries.
 
 ## What it provides
 
