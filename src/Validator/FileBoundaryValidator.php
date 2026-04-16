@@ -10,6 +10,11 @@ use Scafera\Kernel\Tool\FileFinder;
 
 final class FileBoundaryValidator implements ValidatorInterface
 {
+    public function getId(): string
+    {
+        return 'file.boundary';
+    }
+
     public function getName(): string
     {
         return 'File Boundary';
